@@ -39,7 +39,13 @@ async function getById(userId: number) {
     return ticket;
 
 }
+
+async function getTicketByType() {
+    const ticketTypes = await ticketsRepository.findTicketTypes();
+    return ticketTypes;
+};
 export const ticketsService = {
     create,
-    getById
+    getById,
+    getTicketByType
 }

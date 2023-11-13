@@ -22,7 +22,13 @@ async function findByEnrollment(enrollmentId: number) {
 
     return ticket;
 }
+
+async function findTicketTypes(){
+    const res = await prisma.ticketType.findMany();
+    return res;
+}
 export const ticketsRepository = {
     create,
-    findByEnrollment
+    findByEnrollment,
+    findTicketTypes,
 }
