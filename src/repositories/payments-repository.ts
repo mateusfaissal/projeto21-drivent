@@ -12,6 +12,14 @@ async function create(ticketId: number, params: PaymentMethod) {
       return res;
 }
 
+async function findById(ticketId: number) {
+    const res = await prisma.payment.findFirst({
+        where: { ticketId },
+      });
+      return res;
+}
+
 export const paymentsRepository = {
-    create
+    create,
+    findById
 };

@@ -29,4 +29,28 @@ async function processPayment(ticketId: number, userId: number, cardData: Paymen
   
     return payment;
   }
+
+  async function getPayments(userId: number, ticketId: number) {
+    if (!ticketId || isNaN(ticketId)) {
+        throw invalidDataError('ticketId');
+      }
+    
+      const ticket = await ticketsRepository.findTicketId(ticketId);
+      if (!ticket) {
+        throw notFoundError();
+      }
+    
+      const enrollment = await enrollmentRepository.findWithAddressByUserId(userId);
+      if (!enrollment || ticket.enrollmentId !== enrollment.id) {
+        throw unauthorizedError();
+      }
+
+      const payment = await paymentsRepository.findById(ticketId);
+
+      return payment;
+  }
   
+  export const paymentsService = {
+    processPayment,
+    getPayments
+  }
