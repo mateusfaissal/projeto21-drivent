@@ -23,6 +23,23 @@ async function create(userId: number, ticketTypeId: number) {
       const result = await ticketsRepository.create(ticket);
       return result;
 }
+
+async function getById(userId: number) {
+    const enrollment = await enrollmentRepository.findWithAddressByUserId(userId);
+    
+    if (!enrollment) {
+        throw notFoundError();
+    }
+
+    const ticket = await ticketsRepository.findByEnrollment(enrollment.id);
+    if (!ticket) {
+        throw notFoundError();
+    }
+
+    return ticket;
+
+}
 export const ticketsService = {
-    create
+    create,
+    getById
 }

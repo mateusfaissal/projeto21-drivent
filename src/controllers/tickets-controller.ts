@@ -11,3 +11,10 @@ export async function createTicket(req: AuthenticatedRequest, res: Response) {
     const newTicket = await ticketsService.create(userId, ticketTypeId);
     return res.status(httpStatus.CREATED).send(newTicket)
 };
+
+export async function getTicket(req: AuthenticatedRequest, res: Response) {
+    const { userId } = req;
+
+    const ticket = await ticketsService.getById(userId);
+    res.status(httpStatus.OK).send(ticket)
+}
